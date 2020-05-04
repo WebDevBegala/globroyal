@@ -14,7 +14,7 @@ $(".schedule").ready(() => {
     let day = d.getDate();
     console.log(d.getDate() - 1)
     selectDay(d.getDate() - 1)
-    //     $.post("http://192.168.64.4/globroyal/getOpenHours.php",
+    //     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
     //     {
     //         day: day
     //     },
@@ -79,9 +79,9 @@ function getOpenHours(date) {
 
     let d = new Date();
     console.log("Day: ", d.getDate(), date)
-    $.post("http://192.168.64.4/globroyal/getOpenHours.php",
+    $.post("https://globroyal.hu/globroyal/getOpenHours.php",
         {
-            day: d.getDate() - 2
+            day: d.getDay() - 1
         },
         (res, status) => {
 
@@ -126,7 +126,7 @@ function getFreePos(date) {
     console.log("Get Free Pos")
     $.ajax({
         type: "POST",
-        url: "http://192.168.64.4/globroyal/getAdminReservations.php",
+        url: "https://globroyal.hu/globroyal/getAdminReservations.php",
         data: "data=" + JSON.stringify({ date: date }),
         dataType: "JSON",
         success: function (response) {

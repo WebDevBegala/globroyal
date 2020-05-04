@@ -12,9 +12,10 @@ $(document).ready(() => {
     let year = d.getFullYear();
     let month = d.getMonth()
     let day = d.getDate();
-
+    let monthString = month > 9 ? (month+1) : "0"+(month+1)
+    $("#currentDate").text(year+"-" + monthString)
     renderDays(year, month)
-    //     $.post("http://192.168.64.4/globroyal/getOpenHours.php",
+    //     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
     //     {
     //         day: day
     //     },
@@ -73,6 +74,7 @@ const selectDay = (dayI) => {
     $(".calendar-content").addClass("calendar-times").removeClass("calendar-content");
     getFreePos(date)
     getOpenHours(date)
+    $("#currentDate").text(date)
 }
 
 function getOpenHours(date) {
@@ -81,7 +83,7 @@ function getOpenHours(date) {
     let d = new Date(date);
     let day = d.getDay();
     console.log("Day: ", day, d.getMonth(), date)
-    $.post("http://192.168.64.4/globroyal/getOpenHours.php",
+    $.post("https://globroyal.hu/globroyal/getOpenHours.php",
         {
             day: day
         },

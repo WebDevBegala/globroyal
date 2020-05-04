@@ -34,7 +34,7 @@ $(".btn-send").click(function () {
 
         $.ajax({
             type: "POST",
-            url: "http://192.168.64.4/globroyal/setSchedule.php",
+            url: "https://globroyal.hu/globroyal/setSchedule.php",
             data: "data=" + JSON.stringify(data),
             dataType: "JSON",
             success: function (response) {
