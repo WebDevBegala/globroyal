@@ -81,7 +81,7 @@ function getOpenHours(date) {
     console.log("Day: ", d.getDate(), date)
     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
         {
-            day: d.getDay() - 1
+            day: d.getDay()
         },
         (res, status) => {
 
