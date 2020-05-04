@@ -90,3 +90,10 @@ margin: 2vw;
     width: fit-content;
     cursor: pointer;
 }
+
+.schedule{
+    display: none;
+    height: 80vh;
+    width: 90vw;
+}
+

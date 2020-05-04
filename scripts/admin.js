@@ -3,6 +3,12 @@ let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "
 let openHours = [];
 var changedHours = [];
 defaultChangeHours()
+
+$(document).ready(function () {
+    $("#openhours").css("background-color","lightblue")
+});
+
+
 function login() {
 
     let data = {
@@ -41,7 +47,7 @@ $("#day-block").ready(() => {
         data: "",
         dataType: "JSON",
         success: function (response) {
-            console.log(response)
+
             refreshTimes(response)
         },
         error: function(err){
@@ -106,7 +112,7 @@ function changeHandler(day, timeSer) {
 
 function changeClosed(day){
     changedHours[day].closed = !changedHours[day].closed;
-    console.log(changedHours[day].closed)
+
 }
 
 function changeOpenHours() {
@@ -114,14 +120,14 @@ function changeOpenHours() {
     console.log("Send:", data)
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/changeHours.php",
+        url: "http://192.168.64.4/globroyal/changeHours.php",
         data: "data=" + data,
         dataType: "JSON",
         success: function (response) {
-            // if(response){
-            //     console.log("Response: ",response)
-            // }
-            console.log("Response: ",response)
+            if(response){
+                alert("Sikeres változtatás");
+            }
+            // console.log("Response: ",response)
         },
         error: function (err) {
             console.log("Err: ", err);
@@ -142,3 +148,18 @@ function defaultChangeHours() {
         }
     }
 }
+
+function goToCalendar(){
+$(".openhours-panel").css("display","none");
+$(".schedule").css("display","block");
+}
+
+function goToOpenHours(){
+    $(".openhours-panel").css("display","block");
+    $(".schedule").css("display","none");
+}
+
+function showScheduled(items){
+    console.log(items)
+}
+

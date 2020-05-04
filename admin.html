@@ -5,11 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=" UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/admin.css">
+    <link rel="stylesheet" href="styles/adminCalendar.css">
     <title>Document</title>
 </head>
 
 <body>
     <div class="root">
+        <div class="schedule-info">
+        <p id="scheduled-info-text"></p>
+        </div>
         <div class="form-block">
             <div class="form">
                 <div class="input">
@@ -28,10 +32,10 @@
         <div class="admin-panel">
             <div class="menu">
                 <div class="menu-items">
-                    <div class="item" id="openhours">
+                    <div class="item" id="openhours" onclick="goToOpenHours()">
                         <p>Nyitvatartások kezelése</p>
                     </div>
-                    <div class="item" id="schedule">
+                    <div class="item" id="schedule" onclick="goToCalendar()" >
                         <p>Foglalások kezelése</p>
                     </div>
                     <div class="item" id="vip">
@@ -47,13 +51,21 @@
                 </div>
             </div>
             <div class="schedule">
+                <div class="calendar-block">
+                    <div class="date-navigator">
+                        <i class="fas fa-arrow-left" onclick="back()" ></i>
+                    </div>
+                    <div class="calendar-content">
 
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="scripts/admin.js"></script>
+    <script src="scripts/adminCalendar.js"></script>
 </body>
 
 </html>

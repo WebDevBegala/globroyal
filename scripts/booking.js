@@ -1,7 +1,7 @@
 
 
 let gameData;
-let date;
+
 function couponCode() {
     let checked = document.querySelector(".input-checkbox").checked
     console.log(checked)
@@ -30,15 +30,15 @@ $(".btn-send").click(function () {
             userrank: 1
         }
 
-       
+
 
         $.ajax({
             type: "POST",
-            url: "https://globroyal.hu/globroyal/setSchedule.php",
-            data: "data="+JSON.stringify(data),
+            url: "http://192.168.64.4/globroyal/setSchedule.php",
+            data: "data=" + JSON.stringify(data),
             dataType: "JSON",
             success: function (response) {
-               alert(response.bookingStatus)
+                alert(response.bookingStatus)
                 let d = new Date()
                 let year = d.getFullYear();
                 let month = d.getMonth() < 9 ? "0" + d.getMonth() : d.getMonth()
@@ -47,12 +47,12 @@ $(".btn-send").click(function () {
                 getFreePos(date)
                 getOpenHours()
             },
-            error: function (res){
-                console.log('Error:',res.responseText)
+            error: function (res) {
+                console.log('Error:', res.responseText)
             }
         });
-      
-       
+
+
     }
     else {
         alert("Válaszd ki hogy hova szeretnél foglalni!")
@@ -60,8 +60,7 @@ $(".btn-send").click(function () {
 
 })
 
-function getBookingData(game, time, style) {
-
+function getBookingData(game, time) {
     gameData = {
         type: game,
         time: time

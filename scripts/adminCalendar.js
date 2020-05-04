@@ -1,19 +1,19 @@
 
 var gameTypes = ["B2", "B3", "B4", "B5", "B6", "B7", "D1", "D2"];
-var daysName = ["Hétfő","Kedd","Szerda","Csütörtök","Péntek","Szombat","Vasárnap"];
+var daysName = [""]
 var gHours = [];
 var allDays = [];
 var freeDays = [];
 var date;
 var gDay;
-$(document).ready(() => {
-    bookingDate = date
+$(".schedule").ready(() => {
+    console.log("ready")
     let d = new Date()
     let year = d.getFullYear();
     let month = d.getMonth()
     let day = d.getDate();
-
-    renderDays(year, month)
+    console.log(d.getDate() - 1)
+    selectDay(d.getDate() - 1)
     //     $.post("http://192.168.64.4/globroyal/getOpenHours.php",
     //     {
     //         day: day
@@ -52,10 +52,8 @@ function renderDays(year, month) {
     let d = new Date(year, month, 0)
     for (let i = 1; i < d.getDate() + 1; i++) {
         //console.log(i)
-        let cD=new Date(year+"-"+month+"-"+i)
-        let dayString = daysName[cD.getDay()+1] == undefined ? "Hétfő" : daysName[cD.getDay()+1];
         $(".calendar-content").append(`
-    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i +"</br>" + dayString +`</p></div>
+    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i + `</p></div>
     `)
     }
 }
@@ -65,10 +63,11 @@ const selectDay = (dayI) => {
     let d = new Date()
     let year = d.getFullYear();
     let month = (d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1)
-    let day = dayI < 9 ? "0" + dayI : dayI;
+    let day = dayI < 9 ? "0" + Number(dayI + 1) : Number(dayI + 1);
+
 
     date = year + "-" + month + "-" + day
-    console.log("Date: ", d.getMonth())
+    console.log("Date: ", date)
     $(".calendar-content").html("")
     $(".calendar-content").addClass("calendar-times").removeClass("calendar-content");
     getFreePos(date)
@@ -78,15 +77,14 @@ const selectDay = (dayI) => {
 function getOpenHours(date) {
     gHours = []
 
-    let d = new Date(date);
-    let day = d.getDay();
-    console.log("Day: ", day, d.getMonth(), date)
+    let d = new Date();
+    console.log("Day: ", d.getDate(), date)
     $.post("http://192.168.64.4/globroyal/getOpenHours.php",
         {
-            day: day
+            day: d.getDate() - 2
         },
         (res, status) => {
-            console.log("get open faszom")
+
             console.log("Openhours:", res)
 
             //let data = JSON.parse(res);
@@ -128,7 +126,7 @@ function getFreePos(date) {
     console.log("Get Free Pos")
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/getReservations.php",
+        url: "http://192.168.64.4/globroyal/getAdminReservations.php",
         data: "data=" + JSON.stringify({ date: date }),
         dataType: "JSON",
         success: function (response) {
@@ -137,6 +135,9 @@ function getFreePos(date) {
             for (let i = 0; i < response.length; i++) {
                 array.push({
                     time: Number(response[i].time),
+                    name: (response[i].name),
+                    email: (response[i].email),
+                    phone: (response[i].phone),
                     gameType: response[i].gameType,
                     free: response[i].free
                 })
@@ -173,12 +174,18 @@ function generateDay(otherArray) {
 
 function generateFreeDays(allArray, freeArray) {
     freeDays = [];
+    console.log("All: ", freeArray)
     let array = allArray
     for (let i = 0; i < allArray.length; i++) {
         for (let j = 0; j < freeArray.length; j++) {
             if (array[i].gameType == freeArray[j].gameType
                 && array[i].time == freeArray[j].time) {
                 array[i].free = false
+                array[i].name = freeArray[j].name
+                array[i].email = freeArray[j].email
+                array[i].phone = freeArray[j].phone
+
+
             }
         }
     }
@@ -190,7 +197,7 @@ function generateFreeDays(allArray, freeArray) {
 function generateHtml() {
     $(".calendar-times").html("")
     if (gHours.length == 0) {
-        $(".calendar-times").html("<h3>Ma sajnos zárva van</h3>")
+        $(".calendar-times").html("<h3>Ma zárva van</h3>")
     }
     else {
         for (let i = 0; i < gHours.length; i++) {
@@ -209,17 +216,17 @@ function generateHtml() {
         }
         for (let i = 0; i < gHours.length; i++) {
 
-            freeDays.forEach(e => {
+            freeDays.forEach((e,j) => {
                 if (Number(e.time) === Number(gHours[i])) {
                     if (e.free == false) {
                         $(".times-table:nth-child(" + (i + 1) + ")").append(
-                            "<div style = 'background-color:red' class= 'game-type' onclick = 'alert(`Ez a hely sajnos már foglalt!`)' >" +
+                            "<div style = 'background-color:red' class= 'game-type' onclick='getScheduleInfo("+j+")'>" +
                             "<p>" + e.gameType + "</p>" +
                             "</div > ")
                     }
                     else {
                         $(".times-table").eq(i).append(
-                            "<div class= 'game-type' onclick='getBookingData(`" + e.gameType + "`," + e.time + ")' >" +
+                            "<div class= 'game-type' >" +
                             "<p>" + e.gameType + "</p>" +
                             "</div > ")
                     }
@@ -228,4 +235,22 @@ function generateHtml() {
         }
     }
 }
+
+$(".game-type").click(function (e) {
+    e.preventDefault();
+    console.log(e)
+});
+
+function getScheduleInfo(j){
+    let data = freeDays[j];
+
+    $("#scheduled-info-text").html(`
+        Név: ${data.name} <br>
+        Email: ${data.email} <br>
+        Telefon: ${data.phone}
+    `)
+
+}
+
+
 
