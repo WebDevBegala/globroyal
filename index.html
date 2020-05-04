@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://kit.fontawesome.com/405297d42c.js" crossorigin="anonymous"></script>
+
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="main-block">
+        <div class="schedule">
+            <div class="forms">
+                <div class="input">
+                    <label for="">Név:</label>
+                    <input type="text" id="name" />
+                </div>
+                <div class="input">
+                    <label for="">Email:</label>
+                    <input type="email" id="email" />
+                </div>
+                <div class="input">
+                    <label for="email">Telefonszám:</label>
+                    <input type="mobile" id="phone" />
+                </div>
+                <div class="input-checkbox" onclick="">
+                    <p>Kuponnal foglalok.</p>
+                    <input type="checkbox" />
+                </div>
+                <div class="input coupon-code">
+                    <label>Kuponkód:</label>
+                    <input type="text" placeholder="kód" id="coupon-code" />
+                </div>
+                <div class="gameinfo">
+
+                </div>
+                <div class="btn-send">
+                    <p>Foglalás</p>
+                </div>
+            </div>
+        </div>
+        <div class="calendar-block">
+            <div class="date-navigator">
+                <i class="fas fa-arrow-left" onclick="back()" ></i>
+                <p>2020.03.05</p>
+
+            </div>
+            <div class="calendar-content">
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://kit.fontawesome.com/405297d42c.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="scripts/calendar.js"></script>
+    <script src="scripts/booking.js"></script>
+</body>
+
+</html>

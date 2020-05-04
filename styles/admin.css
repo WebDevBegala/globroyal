@@ -1,0 +1,92 @@
+body > *{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.form-block{
+    height: 60vh;
+    width: 30vw;
+    box-shadow: 2px 12px 20px 0px gray;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    display: none;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.input{
+    width: 60%;
+}
+.input > input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid darkgray;
+    outline: none;
+    font-size: 1.2vw;
+}
+
+.btn-login{
+    background-color: lightblue;
+    margin-top: 6vh;
+    padding: 0px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.admin-panel{
+   margin:10%
+}
+
+.menu-items{
+    display: flex;
+}
+
+.item{
+border: 1px solid lightblue;
+padding: 0 1vw;
+transition: 0.4s;
+cursor: pointer;
+}
+
+.item:nth-child(1){
+    border-radius: 10px 0 0 10px;
+    border-right: 0;
+}
+
+.item:nth-child(3){
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+}
+
+.item:hover{
+    background-color: lightblue;
+}
+
+.openhours-panel{
+    display: flex;
+    flex-direction: column;
+}
+.day{
+margin: 2vw;
+}
+
+.btn-openhours{
+    background-color: lightblue;
+    margin-top: 3vh;
+    padding: 0px 15px;
+    border-radius: 20px;
+    width: fit-content;
+    cursor: pointer;
+}
