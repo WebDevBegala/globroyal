@@ -114,7 +114,7 @@ function changeOpenHours() {
     console.log("Send:", data)
     $.ajax({
         type: "POST",
-        url: "http://192.168.64.4/globroyal/changeHours.php",
+        url: "https://globroyal.hu/globroyal/changeHours.php",
         data: "data=" + data,
         dataType: "JSON",
         success: function (response) {
