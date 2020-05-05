@@ -2,6 +2,10 @@
 let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 let openHours = [];
 var changedHours = [];
+var releaseUrl = "https://globroyal.hu/globroyal/";
+var developmentUrl = "http://192.168.64.4/globroyal/";
+
+var apiUrl = developmentUrl;
 defaultChangeHours()
 
 $(document).ready(function () {
@@ -18,7 +22,7 @@ function login() {
     let resData;
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/login.php",
+        url: apiUrl+"login.php",
         data: "data=" + JSON.stringify(data),
         dataType: "JSON",
         success: function (res) {
@@ -41,20 +45,7 @@ let logined = (data) => {
 
 $("#day-block").ready(() => {
 
-    $.ajax({
-        type: "POST",
-        url: "https://globroyal.hu/globroyal/getOpenHours.php",
-        data: "",
-        dataType: "JSON",
-        success: function (response) {
-
-            refreshTimes(response)
-        },
-        error: function(err){
-            console.log("Error: ",err)
-
-        }
-    });
+    getDaysOpened()
 
     for (let i = 1; i <= days.length; i++) {
         let a = i
@@ -120,12 +111,13 @@ function changeOpenHours() {
     console.log("Send:", data)
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/changeHours.php",
+        url: apiUrl+"changeHours.php",
         data: "data=" + data,
         dataType: "JSON",
         success: function (response) {
             if(response){
                 alert("Sikeres változtatás");
+                getDaysOpened()
             }
             // console.log("Response: ",response)
         },
@@ -163,3 +155,18 @@ function showScheduled(items){
     console.log(items)
 }
 
+function getDaysOpened(){
+    $.ajax({
+        type: "POST",
+        url: apiUrl+"getOpenHours.php",
+        data: "",
+        dataType: "JSON",
+        success: function (response) {
+            refreshTimes(response)
+        },
+        error: function(err){
+            console.log("Error: ",err)
+
+        }
+    });
+}

@@ -79,7 +79,7 @@ function getOpenHours(date) {
 
     let d = new Date();
     console.log("Day: ", d.getDate(), date)
-    $.post("https://globroyal.hu/globroyal/getOpenHours.php",
+    $.post(apiUrl + "getOpenHours.php",
         {
             day: d.getDay()
         },
@@ -126,7 +126,7 @@ function getFreePos(date) {
     console.log("Get Free Pos")
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/getAdminReservations.php",
+        url: apiUrl + "getAdminReservations.php",
         data: "data=" + JSON.stringify({ date: date }),
         dataType: "JSON",
         success: function (response) {
@@ -139,6 +139,7 @@ function getFreePos(date) {
                     email: (response[i].email),
                     phone: (response[i].phone),
                     gameType: response[i].gameType,
+                    coupon: response[i].coupon,
                     free: response[i].free
                 })
             }
@@ -184,6 +185,7 @@ function generateFreeDays(allArray, freeArray) {
                 array[i].name = freeArray[j].name
                 array[i].email = freeArray[j].email
                 array[i].phone = freeArray[j].phone
+                array[i].coupon = freeArray[j].coupon
 
 
             }
@@ -216,11 +218,11 @@ function generateHtml() {
         }
         for (let i = 0; i < gHours.length; i++) {
 
-            freeDays.forEach((e,j) => {
+            freeDays.forEach((e, j) => {
                 if (Number(e.time) === Number(gHours[i])) {
                     if (e.free == false) {
                         $(".times-table:nth-child(" + (i + 1) + ")").append(
-                            "<div style = 'background-color:red' class= 'game-type' onclick='getScheduleInfo("+j+")'>" +
+                            "<div style = 'background-color:red' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
                             "<p>" + e.gameType + "</p>" +
                             "</div > ")
                     }
@@ -240,14 +242,17 @@ $(".game-type").click(function (e) {
     e.preventDefault();
     console.log(e)
 });
-
-function getScheduleInfo(j){
+let index;
+function getScheduleInfo(j) {
+    index = j;
     let data = freeDays[j];
-
+    $("#newGameType").val(data.gameType)
+    $(".schedule-info").css("display", "flex")
     $("#scheduled-info-text").html(`
         Név: ${data.name} <br>
         Email: ${data.email} <br>
-        Telefon: ${data.phone}
+        Telefon: ${data.phone} <br>
+        Kupon kód: ${data.coupon}
     `)
 
 }

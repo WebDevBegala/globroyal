@@ -12,7 +12,23 @@
 <body>
     <div class="root">
         <div class="schedule-info">
-        <p id="scheduled-info-text"></p>
+            <p id="scheduled-info-text"></p>
+            <select name="" id="newGameType">
+                <option value="B1">B1</option>
+                <option value="B2">B2</option>
+                <option value="B3">B3</option>
+                <option value="B4">B4</option>
+                <option value="B5">B5</option>
+                <option value="B6">B6</option>
+                <option value="D1">D1</option>
+                <option value="D2">D2</option>
+            </select>
+            <div class="btn" onclick="editSchedule()" >
+                <p>Átfoglalás</p>
+            </div>
+            <div class="btn" onclick="deleteSchedule()" >
+                <p>Törlés</p>
+            </div>
         </div>
         <div class="form-block">
             <div class="form">
@@ -35,7 +51,7 @@
                     <div class="item" id="openhours" onclick="goToOpenHours()">
                         <p>Nyitvatartások kezelése</p>
                     </div>
-                    <div class="item" id="schedule" onclick="goToCalendar()" >
+                    <div class="item" id="schedule" onclick="goToCalendar()">
                         <p>Foglalások kezelése</p>
                     </div>
                     <div class="item" id="vip">
@@ -53,7 +69,7 @@
             <div class="schedule">
                 <div class="calendar-block">
                     <div class="date-navigator">
-                        <i class="fas fa-arrow-left" onclick="back()" ></i>
+                        <i class="fas fa-arrow-left" onclick="back()"></i>
                     </div>
                     <div class="calendar-content">
 
@@ -66,6 +82,7 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="scripts/admin.js"></script>
     <script src="scripts/adminCalendar.js"></script>
+    <script src="scripts/adminScheduleEdit.js"></script>
 </body>
 
 </html>

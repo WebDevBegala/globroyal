@@ -56,7 +56,7 @@ function renderDays(year, month) {
         let cD=new Date(year+"-"+month+"-"+i)
         let dayString = daysName[cD.getDay()+1] == undefined ? "Hétfő" : daysName[cD.getDay()+1];
         $(".calendar-content").append(`
-    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i +"</br>" + dayString +`</p></div>
+    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i +".</br>" + dayString +`</p></div>
     `)
     }
 }
@@ -83,7 +83,7 @@ function getOpenHours(date) {
     let d = new Date(date);
     let day = d.getDay();
     console.log("Day: ", day, d.getMonth(), date)
-    $.post("https://globroyal.hu/globroyal/getOpenHours.php",
+    $.post(apiUrl+"getOpenHours.php",
         {
             day: day
         },
@@ -130,7 +130,7 @@ function getFreePos(date) {
     console.log("Get Free Pos")
     $.ajax({
         type: "POST",
-        url: "https://globroyal.hu/globroyal/getReservations.php",
+        url: apiUrl+"getReservations.php",
         data: "data=" + JSON.stringify({ date: date }),
         dataType: "JSON",
         success: function (response) {
