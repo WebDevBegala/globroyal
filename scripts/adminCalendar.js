@@ -102,7 +102,7 @@ function getOpenHours(date) {
                 let d = new Date();
                 d.setHours(Number(start) + i)
 
-                let hours = d.getHours() == 0 ? 24 : d.getHours()
+                let hours = d.getHours()
                 gHours.push(hours)
 
             }
@@ -140,10 +140,12 @@ function getFreePos(date) {
                     phone: (response[i].phone),
                     gameType: response[i].gameType,
                     coupon: response[i].coupon,
-                    free: response[i].free
+                    desc: response[i].desc,
+                    free: response[i].free,
+                    rank: response[i].rank
                 })
             }
-
+            console.log("Res:", response)
             generateDay(array)
         },
         error: function (err) {
@@ -186,6 +188,9 @@ function generateFreeDays(allArray, freeArray) {
                 array[i].email = freeArray[j].email
                 array[i].phone = freeArray[j].phone
                 array[i].coupon = freeArray[j].coupon
+                array[i].desc = freeArray[j].desc
+                array[i].rank = freeArray[j].rank
+
 
 
             }
@@ -204,13 +209,22 @@ function generateHtml() {
     else {
         for (let i = 0; i < gHours.length; i++) {
 
+            if (Number(gHours[i] + 1) == 25) {
+                $(".calendar-times").append(`
+                <div class="times-table">
+                    <div class="time">
+                        <p>`+ gHours[i] + `:00  -  01:00</p>
+                    </div>
+                 </div>`);
+            } else {
+                $(".calendar-times").append(`
+                <div class="times-table">
+                    <div class="time">
+                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 1) + `:00</p>
+                    </div>
+                 </div>`);
+            }
 
-            $(".calendar-times").append(`
-        <div class="times-table">
-            <div class="time">
-                <p>`+ gHours[i] + `:00</p>
-            </div>
-         </div>`);
 
 
 
@@ -221,14 +235,55 @@ function generateHtml() {
             freeDays.forEach((e, j) => {
                 if (Number(e.time) === Number(gHours[i])) {
                     if (e.free == false) {
-                        $(".times-table:nth-child(" + (i + 1) + ")").append(
-                            "<div style = 'background-color:red' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
-                            "<p>" + e.gameType + "</p>" +
-                            "</div > ")
+                        switch (Number(e.rank)) {
+                            case 1:
+                                if (e.gameType.substr(0, 1) == "B") {
+                                    $(".times-table:nth-child(" + (i + 1) + ")").append(
+                                        "<div style = 'background-color:orange' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<p>" + e.gameType + "</p>" +
+                                        "</div > ")
+                                }
+                                else {
+                                    $(".times-table:nth-child(" + (i + 1) + ")").append(
+                                        "<div style = 'background-color:yellow' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<p>" + e.gameType + "</p>" +
+                                        "</div > ")
+                                }
+
+                                break;
+                            case 2:
+                                if (e.gameType.substr(0, 1) == "B") {
+                                    $(".times-table:nth-child(" + (i + 1) + ")").append(
+                                        "<div style = 'background-color:lightblue' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<p>" + e.gameType + "</p>" +
+                                        "</div > ")
+                                }
+                                else {
+                                    $(".times-table:nth-child(" + (i + 1) + ")").append(
+                                        "<div style = 'background-color:lightgreen' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<p>" + e.gameType + "</p>" +
+                                        "</div > ")
+                                }
+
+                                break;
+                            case 3:
+                                $(".times-table:nth-child(" + (i + 1) + ")").append(
+                                    "<div style = 'background-color:gold' class= 'game-type' onclick='vipInfo(" + j + ")'>" +
+                                    "<p>" + e.gameType + "</p>" +
+                                    "</div > ")
+                            default:
+                                break;
+                        }
+
+                        // $(".times-table:nth-child(" + (i + 1) + ")").append(
+                        //     "<div style = 'background-color:red' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                        //     "<p>" + e.gameType + "</p>" +
+                        //     "</div > ")
+
                     }
                     else {
                         $(".times-table").eq(i).append(
-                            "<div class= 'game-type' >" +
+                            "<div class= 'game-type' onclick='setAdminSchedule(" + j + ")' >" +
                             "<p>" + e.gameType + "</p>" +
                             "</div > ")
                     }
@@ -245,6 +300,7 @@ $(".game-type").click(function (e) {
 let index;
 function getScheduleInfo(j) {
     index = j;
+    adminGameData = freeDays[index]
     let data = freeDays[j];
     $("#newGameType").val(data.gameType)
     $(".schedule-info").css("display", "flex")
@@ -252,6 +308,7 @@ function getScheduleInfo(j) {
         Név: ${data.name} <br>
         Email: ${data.email} <br>
         Telefon: ${data.phone} <br>
+        Megjegyzés: ${data.desc} <br>
         Kupon kód: ${data.coupon}
     `)
 

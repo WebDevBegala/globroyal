@@ -4,12 +4,12 @@ let openHours = [];
 var changedHours = [];
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
-
-var apiUrl = releaseUrl;
+var newGHours = [];
+var apiUrl = developmentUrl;
 defaultChangeHours()
 
 $(document).ready(function () {
-    $("#openhours").css("background-color","lightblue")
+    $("#openhours").css("background-color", "lightblue")
 });
 
 
@@ -22,7 +22,7 @@ function login() {
     let resData;
     $.ajax({
         type: "POST",
-        url: apiUrl+"login.php",
+        url: apiUrl + "login.php",
         data: "data=" + JSON.stringify(data),
         dataType: "JSON",
         success: function (res) {
@@ -54,7 +54,7 @@ $("#day-block").ready(() => {
         <p>`+ days[i - 1] + `</p>
         <div>
             <p>Nyitás:</p>
-            <input type="time" step="3600000"  id="open-`+ dayI + `" onblur="changeHandler(${dayI},'open')" >
+            <input type="time" step="3600000" max="24"  id="open-`+ dayI + `" onblur="changeHandler(${dayI},'open')" >
         </div>
         <div>
             <p>Zárás:</p>
@@ -101,7 +101,7 @@ function changeHandler(day, timeSer) {
 
 }
 
-function changeClosed(day){
+function changeClosed(day) {
     changedHours[day].closed = !changedHours[day].closed;
 
 }
@@ -111,11 +111,11 @@ function changeOpenHours() {
     console.log("Send:", data)
     $.ajax({
         type: "POST",
-        url: apiUrl+"changeHours.php",
+        url: apiUrl + "changeHours.php",
         data: "data=" + data,
         dataType: "JSON",
         success: function (response) {
-            if(response){
+            if (response) {
                 alert("Sikeres változtatás");
                 getDaysOpened()
             }
@@ -134,39 +134,174 @@ function defaultChangeHours() {
         let a = i
         let dayI = a == 7 ? 0 : a++;
         changedHours[dayI] = {
-            open: 0,
-            close: 0,
+            open: -1,
+            close: -1,
             closed: false
         }
     }
 }
 
-function goToCalendar(){
-$(".openhours-panel").css("display","none");
-$(".schedule").css("display","block");
+function goToCalendar() {
+    $(".openhours-panel").css("display", "none");
+    $(".schedule").css("display", "block");
+    $(".vip-panel").css("display", "none");
 }
 
-function goToOpenHours(){
-    $(".openhours-panel").css("display","block");
-    $(".schedule").css("display","none");
+function goToOpenHours() {
+    $(".openhours-panel").css("display", "block");
+    $(".schedule").css("display", "none");
+    $(".vip-panel").css("display", "none");
+}
+function goToVip() {
+    $(".openhours-panel").css("display", "none");
+    $(".schedule").css("display", "none");
+    $(".vip-panel").css("display", "block");
 }
 
-function showScheduled(items){
+function showScheduled(items) {
     console.log(items)
 }
 
-function getDaysOpened(){
+function getDaysOpened() {
     $.ajax({
         type: "POST",
-        url: apiUrl+"getOpenHours.php",
+        url: apiUrl + "getOpenHours.php",
         data: "",
         dataType: "JSON",
         success: function (response) {
             refreshTimes(response)
         },
-        error: function(err){
-            console.log("Error: ",err)
+        error: function (err) {
+            console.log("Error: ", err)
 
         }
+    });
+}
+
+function setVip() {
+
+    let newGHours = [];
+    let type = $("#newVipGameType").val();
+
+    let date = $("#vip-date").val()
+    let d = new Date(date)
+
+    $.post(apiUrl + "getOpenHours.php",
+        {
+            day: d.getDay()
+        },
+        (res, status) => {
+
+            console.log("Openhours:", res)
+
+            //let data = JSON.parse(res);
+            let start = Number(res.opening);
+            let end = res.closing
+            let diff;
+            if (start > end) {
+                diff = (24 - Number(start)) + Number(end);
+            }
+            else {
+                diff = end - start
+            }
+            console.log(diff)
+            for (let i = 0; i < diff; i++) {
+                let d = new Date();
+                d.setHours(Number(start) + i)
+
+                let hours = d.getHours();
+                hours = hours > 9 ? hours + ":00" : "0" + hours + ":00"
+                newGHours.push(hours)
+
+            }
+        }
+    )
+    let hours = [];
+    for (let index = 0; index < newGHours.length; index++) {
+        hours[index] = newGHours[index];
+
+    }
+
+    console.log("Send", hours)
+    setTimeout(() => {
+        let data = {
+            gameType: type,
+            date: date,
+            times: newGHours,
+            edit: false
+        }
+        console.log("Send", data)
+        $.ajax({
+            type: "POST",
+            url: apiUrl + "setVip.php",
+            data: "data=" + JSON.stringify(data),
+            dataType: "JSON",
+            success: function (res) {
+                console.log(res)
+            },
+            error: function (response) {
+                console.log(response)
+            },
+
+        });
+    }, 100);
+
+}
+
+function vipInfo(i) {
+    let data = freeDays[i];
+    adminGameData = freeDays[i]
+    $(".vip-settings").css("display", "block")
+    $("#vip-gametype").text(data.gameType)
+    let time = data.time > 9 ? data.time + ":00" : "0" + data.time + ":00"
+    let d = new Date()
+    let year = d.getFullYear();
+    let month = (d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1)
+    let dayI = gDay;
+    let day = dayI < 9 ? "0" + Number(dayI + 1) : Number(dayI + 1)
+
+    date = year + "-" + month + "-" + day;
+    $("#vip-date").text(date + " " + time)
+    $("#vip-name").text("Név: " + data.name)
+    $("#vip-email").text("Email: " + data.email || "nincs")
+    $("#vip-phone").text("Telefon: " + data.phone || "nincs")
+    $("#vip-coupon").text("Kupon: " + data.coupon || "nincs")
+    $("#vip-desc").text("Megjegyzés: " + data.desc || "nincs")
+
+
+}
+
+function closeAdminVipBookingPanel() {
+    $(".vip-settings").css("display", "none")
+}
+
+function deleteSchedule() {
+    let d = new Date()
+    let year = d.getFullYear();
+    let month = (d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1)
+    let dayI = gDay;
+    let day = dayI < 9 ? "0" + Number(dayI + 1) : Number(dayI + 1)
+
+    date = year + "-" + month + "-" + day;
+    let time = adminGameData.time < 10 ? "0" + adminGameData.time : adminGameData.time;
+    let nextTime = adminGameData.time < 10 ? "0" + Number(adminGameData.time + 1) : Number(adminGameData.time + 1);
+    let data = {
+        date: date + " " + time + ":00",
+        gameType: adminGameData.gameType,
+        date: date + " " + time + ":00",
+        nextDate: date + " " + nextTime + ":00",
+    }
+    $.ajax({
+        type: "POST",
+        url: apiUrl + "deleteSchedule.php",
+        data: "data=" + JSON.stringify(data),
+        dataType: "JSON",
+        success: function (res) {
+           alert("Sikeres törlés")
+        },
+        error: function (response) {
+            alert("Sikertelen törlés")
+        },
+
     });
 }

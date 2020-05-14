@@ -1,7 +1,7 @@
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
 
-var apiUrl = releaseUrl;
+var apiUrl = developmentUrl;
 
 let gameData;
 
@@ -20,6 +20,7 @@ $(".btn-send").click(function () {
         let name = $("#name").val();
         let email = $("#email").val();
         let phone = $("#phone").val();
+        let desc = $("#desc").val();
         let coupon = $("#coupon-code").val();
         let time = gameData.time < 10 ? "0" + gameData.time : gameData.time;
         let nextTime = gameData.time < 10 ? "0" + Number(gameData.time+1) : Number(gameData.time+1);
@@ -31,6 +32,7 @@ $(".btn-send").click(function () {
             gameType: gameData.type,
             date: date + " " + time + ":00",
             nextDate: date + " " + nextTime + ":00",
+            desc:desc,
             userrank: 1
         }
 

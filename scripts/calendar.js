@@ -1,6 +1,6 @@
 
 var gameTypes = ["B2", "B3", "B4", "B5", "B6", "B7", "D1", "D2"];
-var daysName = ["Hétfő","Kedd","Szerda","Csütörtök","Péntek","Szombat","Vasárnap"];
+var daysName = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 var gHours = [];
 var allDays = [];
 var freeDays = [];
@@ -12,8 +12,8 @@ $(document).ready(() => {
     let year = d.getFullYear();
     let month = d.getMonth()
     let day = d.getDate();
-    let monthString = month > 9 ? (month+1) : "0"+(month+1)
-    $("#currentDate").text(year+"-" + monthString)
+    let monthString = month > 9 ? (month + 1) : "0" + (month + 1)
+    $("#currentDate").text(year + "-" + monthString)
     renderDays(year, month)
     //     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
     //     {
@@ -53,10 +53,10 @@ function renderDays(year, month) {
     let d = new Date(year, month, 0)
     for (let i = 1; i < d.getDate() + 1; i++) {
         //console.log(i)
-        let cD=new Date(year+"-"+month+"-"+i)
-        let dayString = daysName[cD.getDay()+1] == undefined ? "Hétfő" : daysName[cD.getDay()+1];
+        let cD = new Date(year + "-" + month + "-" + i)
+        let dayString = daysName[cD.getDay() + 1] == undefined ? "Hétfő" : daysName[cD.getDay() + 1];
         $(".calendar-content").append(`
-    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i +".</br>" + dayString +`</p></div>
+    <div class="c-block" onclick="selectDay(`+ i + `)" ><p style="margin:0.5em" >` + i + ".</br>" + dayString + `</p></div>
     `)
     }
 }
@@ -83,7 +83,7 @@ function getOpenHours(date) {
     let d = new Date(date);
     let day = d.getDay();
     console.log("Day: ", day, d.getMonth(), date)
-    $.post(apiUrl+"getOpenHours.php",
+    $.post(apiUrl + "getOpenHours.php",
         {
             day: day
         },
@@ -106,7 +106,7 @@ function getOpenHours(date) {
                 let d = new Date();
                 d.setHours(Number(start) + i)
 
-                let hours = d.getHours() == 0 ? 24 : d.getHours()
+                let hours = d.getHours()
                 gHours.push(hours)
 
             }
@@ -130,7 +130,7 @@ function getFreePos(date) {
     console.log("Get Free Pos")
     $.ajax({
         type: "POST",
-        url: apiUrl+"getReservations.php",
+        url: apiUrl + "getReservations.php",
         data: "data=" + JSON.stringify({ date: date }),
         dataType: "JSON",
         success: function (response) {
@@ -198,14 +198,21 @@ function generateHtml() {
         for (let i = 0; i < gHours.length; i++) {
 
 
-            $(".calendar-times").append(`
-        <div class="times-table">
-            <div class="time">
-                <p>`+ gHours[i] + `:00</p>
-            </div>
-         </div>`);
-
-
+            if (Number(gHours[i] + 1) == 25) {
+                $(".calendar-times").append(`
+                <div class="times-table">
+                    <div class="time">
+                        <p>`+ gHours[i] + `:00  -  1:00</p>
+                    </div>
+                 </div>`);
+            } else {
+                $(".calendar-times").append(`
+                <div class="times-table">
+                    <div class="time">
+                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 1) + `:00</p>
+                    </div>
+                 </div>`);
+            }
 
 
         }

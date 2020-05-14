@@ -23,6 +23,7 @@ body > *{
     background-color: #7e0b0b;
     border-radius: 20px;
     height: 70vh;
+    overflow-y: scroll;
 }
 
 .calendar-content {
@@ -102,6 +103,7 @@ body > *{
     display: flex;
     flex-direction: column;
     margin: 20px;
+
 }
 
 .input>label {
