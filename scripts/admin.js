@@ -2,10 +2,15 @@
 let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 let openHours = [];
 var changedHours = [];
+var newGHours = [];
+
+
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
-var newGHours = [];
-var apiUrl = developmentUrl;
+
+var apiUrl = releaseUrl;
+
+
 defaultChangeHours()
 
 $(document).ready(function () {
@@ -297,7 +302,7 @@ function deleteSchedule() {
         data: "data=" + JSON.stringify(data),
         dataType: "JSON",
         success: function (res) {
-           alert("Sikeres törlés")
+            alert("Sikeres törlés")
         },
         error: function (response) {
             alert("Sikertelen törlés")

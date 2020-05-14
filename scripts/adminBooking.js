@@ -1,7 +1,7 @@
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
 
-var apiUrl = developmentUrl;
+var apiUrl = releaseUrl;
 
 var adminGameData;
 
@@ -41,6 +41,7 @@ function adminSetSchedule() {
         email: email,
         phone: phone,
         coupon: coupon,
+        desc:desc,
         gameType: adminGameData.gameType,
         date: date + " " + time + ":00",
         nextDate: date + " " + nextTime + ":00",

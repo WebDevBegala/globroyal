@@ -1,7 +1,7 @@
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
 
-var apiUrl = developmentUrl;
+var apiUrl = releaseUrl;
 
 let gameData;
 
