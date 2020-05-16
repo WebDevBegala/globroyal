@@ -48,7 +48,7 @@ function adminSetSchedule() {
         userrank: 2
     }
 
-    console.log("Foglalás:", data)
+
 
 
     $.ajax({
@@ -65,12 +65,12 @@ function adminSetSchedule() {
             let day = dayI < 9 ? "0" + dayI : dayI;
 
             date = year + "-" + month + "-" + day
-            console.log(date)
+
             getFreePos(date)
             getOpenHours(date)
         },
         error: function (res) {
-            console.log('Error:', res.responseText)
+
         }
     });
 }
@@ -106,7 +106,6 @@ function setVipSchedule(){
         edit:true
     }
 
-    console.log("Foglalás:", data)
 
 
     $.ajax({
@@ -128,7 +127,7 @@ function setVipSchedule(){
             getOpenHours(date)
         },
         error: function (res) {
-            console.log('Error:', res.responseText)
+
         }
     });
 }

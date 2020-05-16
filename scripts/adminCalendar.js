@@ -6,45 +6,16 @@ var allDays = [];
 var freeDays = [];
 var date;
 var gDay;
-$(".schedule").ready(() => {
-    console.log("ready")
+function getScheduleRendered(){
+
     let d = new Date()
     let year = d.getFullYear();
     let month = d.getMonth()
     let day = d.getDate();
-    console.log(d.getDate() - 1)
+
     selectDay(d.getDate() - 1)
-    //     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
-    //     {
-    //         day: day
-    //     },
-    //     (res, status) => {
-    //         console.log(res)
 
-    //         //let data = JSON.parse(res);
-    //         let start = Number(res.opening);
-    //         let end = res.closing
-    //         let diff;
-    //         if (start > end) {
-    //             diff = (24 - Number(start)) + Number(end);
-    //         }
-    //         else {
-    //             diff = end-start
-    //         }
-
-    //         diff = NaN ? 0 : diff;
-    //         console.log(diff)
-    //         for (let i = 0; i < diff; i++) {
-    //             let d = new Date();
-    //             d.setHours(Number(start) + i)
-
-    //             let hours = d.getHours() == 0 ? 24 : d.getHours()
-    //             gHours.push(hours)
-
-    //         }
-    //     }
-    // )
-})
+}
 
 function renderDays(year, month) {
     var calendarContent = $(".calendar-content");
@@ -67,7 +38,7 @@ const selectDay = (dayI) => {
 
 
     date = year + "-" + month + "-" + day
-    console.log("Date: ", date)
+
     $(".calendar-content").html("")
     $(".calendar-content").addClass("calendar-times").removeClass("calendar-content");
     getFreePos(date)
@@ -78,14 +49,14 @@ function getOpenHours(date) {
     gHours = []
 
     let d = new Date();
-    console.log("Day: ", d.getDate(), date)
+
     $.post(apiUrl + "getOpenHours.php",
         {
             day: d.getDay()
         },
         (res, status) => {
 
-            console.log("Openhours:", res)
+
 
             //let data = JSON.parse(res);
             let start = Number(res.opening);
@@ -97,8 +68,8 @@ function getOpenHours(date) {
             else {
                 diff = end - start
             }
-            console.log(diff)
-            for (let i = 0; i < diff; i++) {
+
+            for (let i = 0; i < diff; i+=2) {
                 let d = new Date();
                 d.setHours(Number(start) + i)
 
@@ -123,7 +94,7 @@ function back() {
 
 
 function getFreePos(date) {
-    console.log("Get Free Pos")
+
     $.ajax({
         type: "POST",
         url: apiUrl + "getAdminReservations.php",
@@ -145,7 +116,7 @@ function getFreePos(date) {
                     rank: response[i].rank
                 })
             }
-            console.log("Res:", response)
+
             generateDay(array)
         },
         error: function (err) {
@@ -177,7 +148,7 @@ function generateDay(otherArray) {
 
 function generateFreeDays(allArray, freeArray) {
     freeDays = [];
-    console.log("All: ", freeArray)
+
     let array = allArray
     for (let i = 0; i < allArray.length; i++) {
         for (let j = 0; j < freeArray.length; j++) {
@@ -220,7 +191,7 @@ function generateHtml() {
                 $(".calendar-times").append(`
                 <div class="times-table">
                     <div class="time">
-                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 1) + `:00</p>
+                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 2) + `:00</p>
                     </div>
                  </div>`);
             }
@@ -239,13 +210,13 @@ function generateHtml() {
                             case 1:
                                 if (e.gameType.substr(0, 1) == "B") {
                                     $(".times-table:nth-child(" + (i + 1) + ")").append(
-                                        "<div style = 'background-color:orange' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<div style = 'background-color:orange' title='Név: "+e.name+"' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
                                         "<p>" + e.gameType + "</p>" +
                                         "</div > ")
                                 }
                                 else {
                                     $(".times-table:nth-child(" + (i + 1) + ")").append(
-                                        "<div style = 'background-color:yellow' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<div style = 'background-color:yellow' title='Név: "+e.name+"' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
                                         "<p>" + e.gameType + "</p>" +
                                         "</div > ")
                                 }
@@ -254,13 +225,13 @@ function generateHtml() {
                             case 2:
                                 if (e.gameType.substr(0, 1) == "B") {
                                     $(".times-table:nth-child(" + (i + 1) + ")").append(
-                                        "<div style = 'background-color:lightblue' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<div style = 'background-color:lightblue' title='Név: "+e.name+"' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
                                         "<p>" + e.gameType + "</p>" +
                                         "</div > ")
                                 }
                                 else {
                                     $(".times-table:nth-child(" + (i + 1) + ")").append(
-                                        "<div style = 'background-color:lightgreen' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
+                                        "<div style = 'background-color:lightgreen' title='Név: "+e.name+"' class= 'game-type' onclick='getScheduleInfo(" + j + ")'>" +
                                         "<p>" + e.gameType + "</p>" +
                                         "</div > ")
                                 }
@@ -299,6 +270,7 @@ $(".game-type").click(function (e) {
 });
 let index;
 function getScheduleInfo(j) {
+
     index = j;
     adminGameData = freeDays[index]
     let data = freeDays[j];
@@ -312,6 +284,10 @@ function getScheduleInfo(j) {
         Kupon kód: ${data.coupon}
     `)
 
+}
+
+function closeAdminForm(){
+$(".schedule-info").css("display", "none");
 }
 
 

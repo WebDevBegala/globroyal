@@ -7,7 +7,7 @@ let gameData;
 
 function couponCode() {
     let checked = document.querySelector(".input-checkbox").checked
-    console.log(checked)
+
     $(".coupon-code").toggle()
 }
 
@@ -36,7 +36,6 @@ $(".btn-send").click(function () {
             userrank: 1
         }
 
-        console.log("Foglalás:",data)
 
 
         $.ajax({
@@ -53,12 +52,12 @@ $(".btn-send").click(function () {
                 let day = dayI < 9 ? "0" + dayI : dayI;
 
                 date = year + "-" + month + "-" + day
-                console.log(date)
+
                 getFreePos(date)
                 getOpenHours(date)
             },
             error: function (res) {
-                console.log('Error:', res.responseText)
+
             }
         });
 

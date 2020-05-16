@@ -15,36 +15,6 @@ $(document).ready(() => {
     let monthString = month > 9 ? (month + 1) : "0" + (month + 1)
     $("#currentDate").text(year + "-" + monthString)
     renderDays(year, month)
-    //     $.post("https://globroyal.hu/globroyal/getOpenHours.php",
-    //     {
-    //         day: day
-    //     },
-    //     (res, status) => {
-    //         console.log(res)
-
-    //         //let data = JSON.parse(res);
-    //         let start = Number(res.opening);
-    //         let end = res.closing
-    //         let diff;
-    //         if (start > end) {
-    //             diff = (24 - Number(start)) + Number(end);
-    //         }
-    //         else {
-    //             diff = end-start
-    //         }
-
-    //         diff = NaN ? 0 : diff;
-    //         console.log(diff)
-    //         for (let i = 0; i < diff; i++) {
-    //             let d = new Date();
-    //             d.setHours(Number(start) + i)
-
-    //             let hours = d.getHours() == 0 ? 24 : d.getHours()
-    //             gHours.push(hours)
-
-    //         }
-    //     }
-    // )
 })
 
 function renderDays(year, month) {
@@ -96,15 +66,15 @@ function getOpenHours(date) {
             let end = res.closing
             let diff;
             if (start > end) {
-                diff = (24 - Number(start)) + Number(end);
+                diff = (24 - Number(start)) + Number(end-1);
             }
             else {
                 diff = end - start
             }
             console.log(diff)
-            for (let i = 0; i < diff; i++) {
+            for (let i = 0; i < diff; i+=2) {
                 let d = new Date();
-                d.setHours(Number(start) + i)
+                d.setHours(Number(start)+i)
 
                 let hours = d.getHours()
                 gHours.push(hours)
@@ -137,11 +107,13 @@ function getFreePos(date) {
             console.log(response);
             let array = [];
             for (let i = 0; i < response.length; i++) {
+
                 array.push({
                     time: Number(response[i].time),
                     gameType: response[i].gameType,
                     free: response[i].free
                 })
+
             }
 
             generateDay(array)
@@ -209,7 +181,7 @@ function generateHtml() {
                 $(".calendar-times").append(`
                 <div class="times-table">
                     <div class="time">
-                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 1) + `:00</p>
+                        <p>`+ gHours[i] + `:00  - ` + Number(gHours[i] + 2) + `:00</p>
                     </div>
                  </div>`);
             }

@@ -11,95 +11,6 @@
 
 <body>
     <div class="root">
-        <div class="vip-settings">
-            <div class="info">
-                <p id="vip-gametype"></p>
-                <p id="vip-date"></p>
-                <p id="vip-name"></p>
-                <p id="vip-email"></p>
-                <p id="vip-phone"></p>
-                <p id="vip-coupon"></p>
-                <p id="vip-desc"></p>
-            </div>
-            <div class="input">
-                <label for="">Név:</label>
-                <input type="text" id="name" />
-            </div>
-            <div class="input">
-                <label for="">Email:</label>
-                <input type="email" id="email" />
-            </div>
-            <div class="input">
-                <label for="email">Telefonszám:</label>
-                <input type="mobile" id="phone" />
-            </div>
-            <div class="input">
-                <label for="email">Megjegyzés:</label>
-                <input type="text" id="desc" />
-            </div>
-            <div class="input coupon-code">
-                <label>Kuponkód:</label>
-                <input type="text" placeholder="kód" id="coupon-code" />
-            </div>
-            <div class="adminSchedule-btn" onclick="setVipSchedule()">
-                <p>Átfoglalás</p>
-            </div>
-            <div class="close-btn" onclick="closeAdminVipBookingPanel()">
-                <p>Bezárás</p>
-            </div>
-        </div>
-        <div class="admin-forms">
-            <div class="info">
-                <p id="gametype"></p>
-                <p id="date"></p>
-            </div>
-            <div class="input">
-                <label for="">Név:</label>
-                <input type="text" id="a-name" />
-            </div>
-            <div class="input">
-                <label for="">Email:</label>
-                <input type="email" id="a-email" />
-            </div>
-            <div class="input">
-                <label for="email">Telefonszám:</label>
-                <input type="mobile" id="a-phone" />
-            </div>
-            <div class="input">
-                <label for="email">Megjegyzés:</label>
-                <input type="text" id="a-desc" />
-            </div>
-
-            <div class="input coupon-code">
-                <label>Kuponkód:</label>
-                <input type="text" placeholder="kód" id="a-coupon-code" />
-            </div>
-            <div class="adminSchedule-btn" onclick="adminSetSchedule()">
-                <p>Foglalás</p>
-            </div>
-            <div class="close-btn" onclick="closeAdminBookingPanel()">
-                <p>Bezárás</p>
-            </div>
-        </div>
-        <div class="schedule-info">
-            <p id="scheduled-info-text"></p>
-            <select name="" id="newGameType">
-                <option value="B2">B2</option>
-                <option value="B3">B3</option>
-                <option value="B4">B4</option>
-                <option value="B5">B5</option>
-                <option value="B6">B6</option>
-                <option value="B7">B7</option>
-                <option value="D1">D1</option>
-                <option value="D2">D2</option>
-            </select>
-            <div class="btn" onclick="editSchedule()">
-                <p>Átfoglalás</p>
-            </div>
-            <div class="btn" onclick="deleteSchedule()">
-                <p>Törlés</p>
-            </div>
-        </div>
         <div class="form-block">
             <div class="form">
                 <div class="input">
@@ -110,62 +21,12 @@
                     <p>Jelszó:</p>
                     <input id="password" type="password">
                 </div>
-                <div class="btn-login" onclick="login()">
+                <div class="btn-login">
                     <p>Bejelentkezés</p>
                 </div>
             </div>
         </div>
-        <div class="admin-panel">
-            <div class="menu">
-                <div class="menu-items">
-                    <div class="item" id="openhours" onclick="goToOpenHours()">
-                        <p>Nyitvatartások kezelése</p>
-                    </div>
-                    <div class="item" id="schedule" onclick="goToCalendar()">
-                        <p>Foglalások kezelése</p>
-                    </div>
-                    <div class="item" id="vip" onclick="goToVip()">
-                        <p>VIP kezelése</p>
-                    </div>
-                </div>
-            </div>
-            <div class="openhours-panel">
-                <div style="display: flex;" id="day-block"></div>
-                <div class="btn-openhours" onclick="changeOpenHours()">
-                    <p>Szerkesztés</p>
-                </div>
-            </div>
-            <div class="schedule">
-                <div class="calendar-block">
-                    <div class="date-navigator">
-                        <i class="fas fa-arrow-left" onclick="back()"></i>
-                    </div>
-                    <div class="calendar-content">
-
-                    </div>
-                </div>
-            </div>
-            <div class="vip-panel">
-                <select name="" id="newVipGameType">
-                    <option value="B2">B2</option>
-                    <option value="B3">B3</option>
-                    <option value="B4">B4</option>
-                    <option value="B5">B5</option>
-                    <option value="B6">B6</option>
-                    <option value="B7">B7</option>
-                    <option value="D1">D1</option>
-                    <option value="D2">D2</option>
-                </select>
-
-                <div class="setdate">
-                    <p>Válaszd ki a dátumot</p>
-                    <input type="date" name="" id="vip-date">
-                </div>
-                <div class="btn" onclick="setVip()">
-                    <p>VIP beállítása</p>
-                </div>
-            </div>
-        </div>
+        <div class="admin-panel"> </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
