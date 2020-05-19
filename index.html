@@ -4,13 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/main.min.css">
     <script src="https://kit.fontawesome.com/405297d42c.js" crossorigin="anonymous"></script>
 
     <title>Foglalás</title>
 </head>
 
 <body>
+    <div class="warning-panel">
+        <div style="display: flex;align-items: center;" >
+            <i style="margin-right: 0.5vw;" class="fas fa-exclamation-triangle"></i>
+            <p>Ez a weboldal még fejlesztés alatt áll!</p>
+        </div>
+
+        <i style="cursor: pointer;" onclick="closeWarning()" class="fas fa-times"></i>
+    </div>
+    <div class="footer-blocking"></div>
     <div class="main-block">
         <div class="schedule">
             <div class="forms">
@@ -49,7 +58,7 @@
         <div class="calendar-block">
             <div class="date-navigator">
                 <i class="fas fa-arrow-left" onclick="back()"></i>
-                <p id="currentDate" ></p>
+                <p id="currentDate"></p>
 
             </div>
             <div class="calendar-content">
@@ -58,12 +67,28 @@
         </div>
     </div>
     </div>
+
+
+    <div class="footer">
+        <p>Az foglaláshoz az <a style="color:#7e0b0b" href="./docs/adatvedelmi_glob.pdf" target="_blank">Adatvédelmi
+                nyilatkozat</a> elfogadása kötelező</p>
+        <div class="accepter-btn" onclick="accepted()">
+            <p>Elfogadás</p>
+        </div>
+    </div>
+
+
     <script src="https://kit.fontawesome.com/405297d42c.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="scripts/booking.js"></script>
-    <script src="scripts/calendar.js"></script>
+    <script src="scripts/booking.min.js"></script>
+    <script src="scripts/calendar.min.js"></script>
+    <script>
+        function closeWarning(){
 
+            $('.warning-panel').css("display","none")
+        }
+    </script>
 
 </body>
 
