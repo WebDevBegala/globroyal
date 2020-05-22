@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.min.css">
+    <link rel="stylesheet" href="styles/main.css">
 
     <title>Foglalás</title>
 </head>
@@ -18,7 +18,7 @@
 
         <i style="cursor: pointer;" onclick="closeWarning()" class="fas fa-times"></i>
     </div>
-    <div class="footer-blocking"></div>
+    <div class="footer-blocking" style="display: none;" ></div>
     <div class="main-block">
         <div class="schedule">
             <div class="forms">
@@ -56,8 +56,13 @@
         </div>
         <div class="calendar-block">
             <div class="date-navigator">
-                <i class="fas fa-arrow-left" onclick="back()"></i>
-                <p id="currentDate"></p>
+                <i class="fas fa-arrow-left backarrow" onclick="back()"></i>
+                <div class="currentdate-block">
+                    <i class="fas fa-arrow-left datearrow" onclick="changeCurrentDate(-1)"></i>
+                    <p id="currentDate"></p>
+                    <i class="fas fa-arrow-right datearrow" onclick="changeCurrentDate(1)"></i>
+                </div>
+
 
             </div>
             <div class="calendar-content">
@@ -68,7 +73,7 @@
     </div>
 
 
-    <div class="footer">
+    <div class="footer" style="display: none;" >
         <p>Az foglaláshoz az <a style="color:#7e0b0b" href="./docs/adatvedelmi_glob.pdf" target="_blank">Adatvédelmi
                 nyilatkozat</a> elfogadása kötelező</p>
         <div class="accepter-btn" onclick="accepted()">
@@ -80,7 +85,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="scripts/booking.min.js"></script>
-    <script src="scripts/calendar.min.js"></script>
+    <script src="scripts/calendar.js"></script>
     <script>
         function closeWarning(){
 

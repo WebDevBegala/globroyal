@@ -1,0 +1,170 @@
+body > *{
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.form-block{
+    height: 60vh;
+    width: 30vw;
+    box-shadow: 2px 12px 20px 0px gray;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    border-radius: 10px;
+    display: block;
+}
+
+.form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.input{
+    width: 60%;
+}
+.input > input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border:1px solid darkgray;
+    outline: none;
+    font-size: 1.2vw;
+}
+
+.btn-login{
+    background-color: lightblue;
+    margin-top: 6vh;
+    padding: 0px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.btn{
+    background-color: lightblue;
+    margin-top: 6vh;
+    padding: 1px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.admin-panel{
+   margin:10%;
+   display:block
+}
+
+.menu-items{
+    display: flex;
+}
+
+.item{
+border: 1px solid lightblue;
+padding: 0 1vw;
+transition: 0.4s;
+cursor: pointer;
+}
+
+.item:nth-child(1){
+    border-radius: 10px 0 0 10px;
+    border-right: 0;
+}
+
+.item:nth-child(3){
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+}
+
+.item:hover{
+    background-color: lightblue;
+}
+
+.openhours-panel{
+    display: flex;
+    flex-direction: column;
+}
+.day{
+margin: 2vw;
+}
+
+.btn-openhours{
+    background-color: lightblue;
+    margin-top: 3vh;
+    padding: 0px 15px;
+    border-radius: 20px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.schedule{
+    display: none;
+    height: 80vh;
+    width: 90vw;
+}
+
+.schedule-info{
+    display: none;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.schedule-info > .btn{
+    background-color: lightblue;
+    width: fit-content;
+    padding: 2px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin: 2vh
+}
+
+.adminSchedule-btn{
+    width: fit-content;
+    background-color: lightblue;
+    padding: 2px 10px;
+    border-radius: 20px;
+    margin-top: 2vh;
+    cursor: pointer;
+}
+
+.admin-forms{
+    display: none;
+}
+.close-btn{
+    cursor: pointer;
+}
+.vip-panel{
+    display: none;
+    margin: 5vh;
+}
+.vip-settings{
+    display: none;
+}
+.settings-panel{
+    position: absolute;
+    background-color: white;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: -1px 1px 20px 0px;
+    border-radius: 20px;
+    width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    display: none;
+}
+
+.date-changer{
+    display: flex;
+    align-items: center;
+}
+
+.datearrow{
+    cursor: pointer;
+}
