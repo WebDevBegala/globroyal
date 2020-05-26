@@ -3,7 +3,6 @@ let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "
 let openHours = [];
 var changedHours = [];
 var newGHours = [];
-var daysOff = [];
 window.Buffer = window.Buffer;
 
 var releaseUrl = "https://globroyal.hu/globroyal/";
@@ -19,7 +18,6 @@ setTimeout(() => {
 
 }, 7200 * 1000);
 $(document).ready(function () {
-    getDaysoff()
     $("#openhours").css("background-color", "lightblue")
 
     if (typeof (Storage) !== "undefined") {
@@ -35,7 +33,7 @@ $(document).ready(function () {
             date = sessionStorage.date
             $("#newdate").val(date);
             $("#currentDate").text(date);
-        } else {
+        }else{
 
         }
 
@@ -116,20 +114,9 @@ function changeDate() {
     let newDate = $("#newdate").val();
     date = newDate
     newDate = new Date(newDate)
-    let dayString =  newDate.getDay() == 0 ? 6 : Math.abs(newDate.getDay()-1)
-    let i = 0;
-    while (i < daysOff.length && daysOff[i] != date) {
-        i++;
-    }
-    if (daysOff[i] != date) {
-        selectDayOther(newDate)
-    } else {
-        $(".calendar-times").text("Szabadnap");
 
-    }
-
+    selectDayOther(newDate)
     $("#currentDate").text(date);
-    $("#current-day").text(days[dayString]);
     sessionStorage.date = date
 }
 
@@ -228,45 +215,41 @@ function rendererEmployee() {
                         </div> </div> `);
     $('.admin-panel').append(`<div class="menu">
     <div class="color-menu" style="display:flex;align-items:center" >
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:#00ff71;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >külső billiárd</p>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:orange;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >külső billiárd</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:yellow;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >külső darts</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:lightblue;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >belső billiárd</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:lightgreen;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >belső darts</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:gold;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >VIP</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:khaki;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >már változtatott VIP</p>
+        </div>
+        <div style="display:flex;align-items:center;margin-left:1vw" >
+            <div style="background-color:white;border:1px solid red;width:50px;height:20px"></div>
+            <p style="margin-left:1vw" >Kuponos foglalás</p>
+        </div>
     </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:#6be0b5;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >külső darts</p>
-    </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:lightblue;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >belső billiárd</p>
-    </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:#9b8fe0;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >belső darts</p>
-    </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:gold;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >VIP</p>
-    </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:#fdff87;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >már változtatott VIP</p>
-    </div>
-    <div style="display:flex;align-items:center;margin-left:1vw" >
-        <div style="background-color:white;border:1px solid red;width:50px;height:20px"></div>
-        <p style="margin-left:1vw" >Kuponos foglalás</p>
-    </div>
-</div>
-<div style="margin-left:16vw;margin-right:16vw" >
-<p id="current-day" style="text-align:center" ></p>
-<div class="date-changer" >
-    <input style="font-size:1.1vw" type="date" id="newdate" onchange="changeDate()" />
-    <i class="fas fa-arrow-left datearrow" style="margin-right:1vw;cursor:pointer;font-size:2vw" onclick="changeCurrentDate(-1)"></i>
-    <p id="currentDate" style="font-size:1.1vw" ></p>
-    <i class="fas fa-arrow-right datearrow" style="margin-left:1vw;cursor:pointer;font-size:2vw" onclick="changeCurrentDate(1)"></i>
+    <input type="date" id="newdate" onchange="changeDate()" />
+    <div class="date-changer" >
+    <i class="fas fa-arrow-left datearrow" style="margin-right:1vw" onclick="changeCurrentDate(-1)"></i>
+    <p id="currentDate" ></p>
+    <i class="fas fa-arrow-right datearrow" style="margin-left:1vw" onclick="changeCurrentDate(1)"></i>
     <i class="fas fa-home" style="margin-left:5vw;cursor:pointer" onclick="gohome()" ></i>
-</div>
-</div>
 </div>
     <div class="menu-items">
 
@@ -291,38 +274,38 @@ function rendererAdmin() {
     getDaysOpened()
     $('.admin-panel').append(`
     <div class= "menu" >
-        <div class="color-menu" style="display:flex;align-items:center" >
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:#00ff71;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >külső billiárd</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:#6be0b5;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >külső darts</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:lightblue;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >belső billiárd</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:#9b8fe0;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >belső darts</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:gold;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >VIP</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:#fdff87;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >már változtatott VIP</p>
-            </div>
-            <div style="display:flex;align-items:center;margin-left:1vw" >
-                <div style="background-color:white;border:1px solid red;width:50px;height:20px"></div>
-                <p style="margin-left:1vw" >Kuponos foglalás</p>
-            </div>
-        </div>
+    <div class="color-menu" style="display:flex;align-items:center" >
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:orange;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >külső billiárd</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:yellow;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >külső darts</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:lightblue;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >belső billiárd</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:lightgreen;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >belső darts</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:gold;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >VIP</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:khaki;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >már változtatott VIP</p>
+    </div>
+    <div style="display:flex;align-items:center;margin-left:1vw" >
+        <div style="background-color:white;border:1px solid red;width:50px;height:20px"></div>
+        <p style="margin-left:1vw" >Kuponos foglalás</p>
+    </div>
+</div>
         <div class="menu-items">
-
+        <input type="date" id="newdate" onchange="changeDate()" />
             <div class="item" id="openhours" onclick="goToOpenHours()">
                 <p>Nyitvatartások kezelése</p>
             </div>
@@ -332,19 +315,12 @@ function rendererAdmin() {
             <div class="item" id="vip" onclick="goToVip()">
                 <p>VIP kezelése</p>
             </div>
-            <div class="item" id="vip" onclick="goToFreeDays()">
-            <p>Szabadnapok kezelése</p>
         </div>
-        </div>
-        <div style="margin-left:16vw;margin-right:16vw" >
-            <p id="current-day" style="text-align:center" ></p>
-            <div class="date-changer" >
-                <input style="font-size:1.1vw" type="date" id="newdate" onchange="changeDate()" />
-                <i class="fas fa-arrow-left datearrow" style="margin-right:1vw;cursor:pointer;font-size:1.5vw" onclick="changeCurrentDate(-1)"></i>
-                <p id="currentDate" style="font-size:1.3vw" ></p>
-                <i class="fas fa-arrow-right datearrow" style="margin-left:1vw;cursor:pointer;font-size:1.5vw" onclick="changeCurrentDate(1)"></i>
-                <i class="fas fa-home" style="margin-left:5vw;cursor:pointer" onclick="gohome()" ></i>
-            </div>
+        <div class="date-changer" >
+            <i class="fas fa-arrow-left datearrow" style="margin-right:1vw" onclick="changeCurrentDate(-1)"></i>
+            <p id="currentDate" ></p>
+            <i class="fas fa-arrow-right datearrow" style="margin-left:1vw" onclick="changeCurrentDate(1)"></i>
+            <i class="fas fa-home" style="margin-left:5vw;cursor:pointer" onclick="gohome()" ></i>
         </div>
     </div>
         <div class="openhours-panel">
@@ -363,15 +339,6 @@ function rendererAdmin() {
                 </div>
             </div>
         </div>
-        <div class="freedays-set-block" style="margin:5vw" >
-            <input type="date" id="freedaysDate">
-            <div class="btn" onclick="setFreeDays()">
-                <p>Szabadnap beállítása</p>
-            </div>
-            <div class="btn" onclick="deleteFreeDay()">
-                <p>Szabadnap törlése</p>
-            </div>
-         </div>
         <div class="vip-panel">
             <select name="" id="newVipGameType">
                 <option value="B2">B2</option>
@@ -402,7 +369,7 @@ function rendererAdmin() {
                                     <option value="6">Szombat</option>
                                     <option value="0">Vasárnap</option>
                                 </select>
-            </div>
+    </div>
                             <div class="btn" onclick="setVip()">
                                 <p>VIP beállítása</p>
                             </div>
@@ -596,7 +563,7 @@ function changeOpenHours() {
                 alert("Sikeres változtatás");
                 getDaysOpened()
             }
-
+            // console.log("Response: ",response)
         },
         error: function (err) {
 
@@ -622,26 +589,17 @@ function goToCalendar() {
     $(".openhours-panel").css("display", "none");
     $(".schedule").css("display", "block");
     $(".vip-panel").css("display", "none");
-    $(".freedays-set-block").css("display", "none");
 }
 
 function goToOpenHours() {
     $(".openhours-panel").css("display", "block");
     $(".schedule").css("display", "none");
     $(".vip-panel").css("display", "none");
-    $(".freedays-set-block").css("display", "none");
 }
 function goToVip() {
     $(".openhours-panel").css("display", "none");
     $(".schedule").css("display", "none");
     $(".vip-panel").css("display", "block");
-    $(".freedays-set-block").css("display", "none");
-}
-function goToFreeDays() {
-    $(".freedays-set-block").css("display", "block");
-    $(".openhours-panel").css("display", "none");
-    $(".schedule").css("display", "none");
-    $(".vip-panel").css("display", "none");
 }
 
 function showScheduled(items) {
@@ -760,56 +718,3 @@ function closePanel() {
     $(".settings-panel").hide();
 }
 
-function setFreeDays() {
-    let date = $("#freedaysDate").val();
-
-    $.ajax({
-        type: "POST",
-        url: apiUrl+"setFreeDays.php",
-        data: "data="+JSON.stringify({date:date}),
-        dataType: "JSON",
-        success: function (response) {
-            alert("Sikeres szabadnap beállítás")
-        },
-        error: function (res){
-            alert("Sikertelen szabadnap beállítás")
-        }
-    });
-}
-
-function deleteFreeDay() {
-    let date = $("#freedaysDate").val();
-
-    $.ajax({
-        type: "POST",
-        url: apiUrl+"deleteFreeDays.php",
-        data: "data="+JSON.stringify({date:date}),
-        dataType: "JSON",
-        success: function (response) {
-            alert("Sikeres szabadnap törlés")
-
-        },
-        error: function (res){
-            alert("Sikertelen szabadnap törlés")
-            console.log(res)
-        }
-    });
-}
-
-function getDaysoff() {
-        $.ajax({
-            type: "POST",
-            url: apiUrl + "getFreeDays.php",
-            data: "data=" + JSON.stringify({ date: "", all: true }),
-            dataType: "JSON",
-            success: function (response) {
-                for (let i = 0; i < response.length; i++) {
-                    daysOff.push(response[i].date)
-                }
-
-            },
-            error: function (res) {
-                console.log("Res:", res)
-            }
-        });
-}
