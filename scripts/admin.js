@@ -9,7 +9,7 @@ window.Buffer = window.Buffer;
 var releaseUrl = "https://globroyal.hu/globroyal/";
 var developmentUrl = "http://192.168.64.4/globroyal/";
 
-var apiUrl = developmentUrl;
+var apiUrl = releaseUrl;
 
 
 defaultChangeHours()
@@ -363,7 +363,7 @@ function rendererAdmin() {
                 </div>
             </div>
         </div>
-        <div class="freedays-set-block" style="margin:5vw" >
+        <div class="freedays-set-block" style="margin:5vw;display:none" >
             <input type="date" id="freedaysDate">
             <div class="btn" onclick="setFreeDays()">
                 <p>Szabadnap beállítása</p>
