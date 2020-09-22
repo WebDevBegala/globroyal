@@ -206,7 +206,11 @@ function generateHtml() {
                         <p>`+ gHours[i] + `:00  -  1:00</p>
                     </div>
                  </div>`);
-            } else {
+            }
+            else if(Number(gHours[i] + 2) > Number(gHours[gHours.length-1])){
+
+            }
+            else {
                 $(".calendar-times").append(`
                 <div class="times-table">
                     <div class="time">
