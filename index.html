@@ -2,78 +2,52 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/main.css">
-
-    <title>Foglalás</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/main.css" />
+    <title>GlobRoyal foglalás</title>
 </head>
 
 <body>
-    <div class="warning-panel">
-        <div style="display: flex;align-items: center;" >
-            <i style="margin-right: 0.5vw;" class="fas fa-exclamation-triangle"></i>
-            <p>Ez a weboldal még fejlesztés alatt áll!</p>
-        </div>
-
-        <i style="cursor: pointer;" onclick="closeWarning()" class="fas fa-times"></i>
-    </div>
-    <div class="footer-blocking" style="display: none;" ></div>
-    <div class="main-block">
-        <div class="schedule">
+    <div class="footer-blocking"></div>
+    <div class="root">
+        <h1 style="opacity: 0" class="title">GlobRoyal</h1>
+        <div class="container">
+            <p class="subtitle">Válassz egy dátumot</p>
+            <div class="date_selector selector"></div>
+            <p class="subtitle">Válassz egy játéktípus (B: billiárd, D: darts)</p>
+            <div class="gametype_selector selector"></div>
+            <p class="subtitle">Válassz egy időpontot
+                <p id="time_selector_default">Előbb válasszon ki egy dátumot és egy asztalt</p>
+            </p>
+            <div class="time_selector selector"></div>
             <div class="forms">
-                <div class="input">
-                    <label for="">Név:</label>
+                <div class="form">
+                    <p class="subtitle">Név:</p>
                     <input type="text" id="name" />
                 </div>
-                <div class="input">
-                    <label for="">Email:</label>
+                <div class="form">
+                    <p class="subtitle">Email:</p>
                     <input type="email" id="email" />
                 </div>
-                <div class="input">
-                    <label for="email">Telefonszám:</label>
-                    <input type="mobile" id="phone" />
+                <div class="form">
+                    <p class="subtitle">Telefonszám:</p>
+                    <input type="mobile" id="mobile" />
                 </div>
-                <div class="input-checkbox" onclick="">
-                    <p>Kuponnal foglalok.</p>
-                    <input type="checkbox" />
+                <div class="form">
+                    <p class="subtitle">Megjegyzés (nem kötelező):</p>
+                    <input type="text" id="description" />
                 </div>
-                <div class="input coupon-code">
-                    <label>Kuponkód:</label>
-                    <input type="text" placeholder="kód" id="coupon-code" />
-                </div>
-                <div class="input desc">
-                    <label>Megjegyzés:</label>
-                    <input type="text" placeholder="" id="desc" />
-                </div>
-                <div class="gameinfo">
-
-                </div>
-                <div class="btn-send">
-                    <p>Foglalás</p>
+                <div class="form">
+                    <p class="subtitle">Kuponkód (nem kötelező):</p>
+                    <input type="text" id="coupon" />
                 </div>
             </div>
-        </div>
-        <div class="calendar-block">
-            <div class="date-navigator">
-                <i class="fas fa-arrow-left backarrow" onclick="back()"></i>
-                <div class="currentdate-block">
-                    <i class="fas fa-arrow-left datearrow" onclick="changeCurrentDate(-1)"></i>
-                    <p id="currentDate"></p>
-                    <i class="fas fa-arrow-right datearrow" onclick="changeCurrentDate(1)"></i>
-                </div>
-
-
-            </div>
-            <div class="calendar-content">
-
-            </div>
+            <div class="submit" onclick="submitForm()">Foglalás</div>
         </div>
     </div>
-    </div>
-
-
-    <div class="footer" style="display: none;" >
+    <div class="footer">
         <p>Az foglaláshoz az <a style="color:#7e0b0b" href="./docs/adatvedelmi_glob.pdf" target="_blank">Adatvédelmi
                 nyilatkozat</a> elfogadása kötelező</p>
         <div class="accepter-btn" onclick="accepted()">
@@ -81,18 +55,9 @@
         </div>
     </div>
 
-    <script src="https://kit.fontawesome.com/405297d42c.js" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="scripts/booking.js"></script>
-    <script src="scripts/calendar.js"></script>
-    <script>
-        function closeWarning(){
-
-            $('.warning-panel').css("display","none")
-        }
-    </script>
-
+    <script src="./scripts/jquery.js"></script>
+    <script src="./scripts/main.js"></script>
+    <script src="./scripts/calendar.js"></script>
 </body>
 
 </html>
