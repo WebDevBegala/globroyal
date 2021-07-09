@@ -1,44 +1,26 @@
+var $jscomp = $jscomp || {};
+$jscomp.scope = {};
+$jscomp.createTemplateTagFirstArg = function(a) { return a.raw = a };
+$jscomp.createTemplateTagFirstArgWithRaw = function(a, b) { a.raw = b; return a };
+
 function renderDays() {
     $(".date_selector").html("");
-    let d = new Date();
-    for (let i = 0; i < 14 + 1; i++) {
-        let cD = d.addDays(i);
-        let monthString =
-            cD.getMonth() < 9 ?
-            "0" + Number(cD.getMonth() + 1) :
-            Number(cD.getMonth() + 1);
-        let dateString = cD.getDate() < 9 ? "0" + cD.getDate() : cD.getDate();
-        $(".date_selector").append(`
-            <div class="select_item" onclick="getOpenHours('${cD.getFullYear()}.${monthString}.${dateString}')" >
-                ${monthString}.${dateString}
-            </div>
-        `);
+    for (var a = new Date, b = 0; 15 > b; b++) {
+        var c = a.addDays(b),
+            d = 9 > c.getMonth() ? "0" + Number(c.getMonth() + 1) : Number(c.getMonth() + 1),
+            e = 9 > c.getDate() ? "0" + c.getDate() : c.getDate();
+        $(".date_selector").append('\n            <div class="select_item" onclick="getOpenHours(\'' + c.getFullYear() + "." + d + "." + e + "')\" >\n                " + d + "." + e + "\n            </div>\n        ")
     }
 }
 
-function renderGameTypes() {
-    const gameTypes = ["B2", "B3", "B4", "B5", "B6", "B7", "D1", "D2"];
-    gameTypes.forEach((gametype) => {
-        $(".gametype_selector").append(`
-            <div class="select_item" onclick="gameTypeSelected('${gametype}')" >
-                ${gametype}
-            </div>
-        `);
-    });
-}
+function renderGameTypes() { "B2 B3 B4 B5 B6 B7 D1 D2".split(" ").forEach(function(a) { $(".gametype_selector").append('\n            <div class="select_item" onclick="gameTypeSelected(\'' + a + "')\" >\n                " + a + "\n            </div>\n        ") }) }
 
-function renderTime(freeTable) {
-    $('#time_selector_default').remove();
+function renderTime(a) {
+    $("#time_selector_default").remove();
     $(".time_selector").html("");
-    freeTable.forEach((time) => {
-        $(".time_selector").append(`
-            <div class="select_item" onclick="setSelectedTime('${time}:00')" >
-                ${time}:00
-            </div>
-        `);
-    });
-    $(".time_selector > .select_item").click(function(e) {
+    a.forEach(function(b) { $(".time_selector").append('\n            <div class="select_item" onclick="setSelectedTime(\'' + b + ":00')\" >\n                " + b + ":00\n            </div>\n        ") });
+    $(".time_selector > .select_item").click(function(b) {
         $(".time_selector > .select_item").css("background-color", "white");
-        $(e.currentTarget).css("background-color", "yellow");
-    });
-}
+        $(b.currentTarget).css("background-color", "yellow")
+    })
+};
