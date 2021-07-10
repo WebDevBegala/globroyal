@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 let openHours = [];
 var changedHours = [];
