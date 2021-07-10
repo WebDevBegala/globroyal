@@ -1,4 +1,3 @@
-
 let days = ["Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat", "Vasárnap"];
 let openHours = [];
 var changedHours = [];
@@ -17,9 +16,9 @@ setTimeout(() => {
     location.reload();
 
 }, 7200 * 1000);
-$(document).ready(function () {
+$(document).ready(function() {
     $("#openhours").css("background-color", "lightblue")
-    if (typeof (Storage) !== "undefined") {
+    if (typeof(Storage) !== "undefined") {
         if (sessionStorage.adminData) {
             let data = sessionStorage.adminData;
             data = JSON.parse(data);
@@ -34,9 +33,10 @@ $(document).ready(function () {
     }
 });
 
-$(".btn-login").click(function (e) {
+$(".btn-login").click(function(e) {
     login()
 });
+
 function isNumber(n) { return !isNaN(parseFloat(n)) && !isNaN(n - 0) }
 
 function change(s) {
@@ -61,6 +61,7 @@ function change(s) {
 
     return ns;
 }
+
 function login() {
 
 
@@ -80,8 +81,8 @@ function login() {
         url: apiUrl + "login.php",
         data: "data=" + data,
         dataType: "JSON",
-        success: function (res) {
-            if (typeof (Storage) !== "undefined") {
+        success: function(res) {
+            if (typeof(Storage) !== "undefined") {
 
                 let data = {
                     rang: res.rang,
@@ -94,7 +95,7 @@ function login() {
             }
             logined(res)
         },
-        error: function (response) {
+        error: function(response) {
             alert("Sikertelen belépés")
         },
 
@@ -223,9 +224,10 @@ function rendererEmployee() {
     getScheduleRendered()
 
 }
-String.prototype.splice = function (idx, rem, str) {
+String.prototype.splice = function(idx, rem, str) {
     return this.slice(0, idx) + str + this.slice(idx + Math.abs(rem));
 };
+
 function rendererAdmin() {
     getDaysOpened()
     $('.admin-panel').append(`
@@ -420,24 +422,24 @@ function generateDaysOpened() {
         let a = i
         let dayI = a == 7 ? 0 : a++;
         $("#day-block").append(`<div class="day">
-                            <p>`+ days[i - 1] + `</p>
+                            <p>` + days[i - 1] + `</p>
                             <div>
                                 <p>Nyitás:</p>
-                                <input type="time" step="3600000" max="24" id="open-`+ dayI + `" onblur="changeHandler(${dayI},'open')" >
+                                <input type="time" step="3600000" max="24" id="open-` + dayI + `" onblur="changeHandler(${dayI},'open')" >
         </div>
                                 <div>
                                     <p>Zárás:</p>
-                                    <input type="time" step="3600000" id="close-`+ dayI + `" onblur="changeHandler(${dayI},'close')" >
+                                    <input type="time" step="3600000" id="close-` + dayI + `" onblur="changeHandler(${dayI},'close')" >
         </div>
                                     <div style="display:flex;align-items:center" >
                                         <p>Zárva van:</p>
-                                        <input type="checkbox" id="checkbox-`+ dayI + `" onclick="changeClosed(${dayI})" >
+                                        <input type="checkbox" id="checkbox-` + dayI + `" onclick="changeClosed(${dayI})" >
         </div>
                                     </div>`);
     }
 }
 
-$(".item").click(function () {
+$(".item").click(function() {
     let id = $(this).attr("id");
     $("#" + id).css("background-color", "lightblue");
     $(".item").not("#" + id).css("background-color", "white")
@@ -460,8 +462,7 @@ function changeHandler(day, timeSer) {
         newTime = $("#open-" + day).val()
         newTime = newTime.replace(":00", "")
         changedHours[day].open = Number(newTime);
-    }
-    else {
+    } else {
         newTime = $("#close-" + day).val()
         newTime = newTime.replace(":00", "")
         changedHours[day].close = Number(newTime);
@@ -483,14 +484,14 @@ function changeOpenHours() {
         url: apiUrl + "changeHours.php",
         data: "data=" + data,
         dataType: "JSON",
-        success: function (response) {
+        success: function(response) {
             if (response) {
                 alert("Sikeres változtatás");
                 getDaysOpened()
             }
             // console.log("Response: ",response)
         },
-        error: function (err) {
+        error: function(err) {
 
 
         }
@@ -521,6 +522,7 @@ function goToOpenHours() {
     $(".schedule").css("display", "none");
     $(".vip-panel").css("display", "none");
 }
+
 function goToVip() {
     $(".openhours-panel").css("display", "none");
     $(".schedule").css("display", "none");
@@ -537,10 +539,10 @@ function getDaysOpened() {
         url: apiUrl + "getOpenHours.php",
         data: "",
         dataType: "JSON",
-        success: function (response) {
+        success: function(response) {
             refreshTimes(response)
         },
-        error: function (err) {
+        error: function(err) {
             console.log("Error: ", err)
 
         }
@@ -590,11 +592,11 @@ function deleteVip() {
         url: apiUrl + "deleteVip.php",
         data: "data=" + JSON.stringify(data),
         dataType: "JSON",
-        success: function (res) {
+        success: function(res) {
             alert("Sikeres törlés")
             closeAdminVipBookingPanel()
         },
-        error: function (response) {
+        error: function(response) {
             alert("Sikertelen törlés")
             closeAdminVipBookingPanel()
         },
@@ -623,10 +625,10 @@ function deleteSchedule() {
         url: apiUrl + "deleteSchedule.php",
         data: "data=" + JSON.stringify(data),
         dataType: "JSON",
-        success: function (res) {
+        success: function(res) {
             alert("Sikeres törlés")
         },
-        error: function (response) {
+        error: function(response) {
             alert("Sikertelen törlés")
         },
 
@@ -636,4 +638,3 @@ function deleteSchedule() {
 function closePanel() {
     $(".settings-panel").hide();
 }
-
